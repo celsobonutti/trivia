@@ -5,8 +5,8 @@ export enum Difficulty {
 }
 
 export type Category = {
-  label: string,
-  id: number
+  label: string;
+  value: string;
 };
 
 export type Question = {

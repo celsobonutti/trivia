@@ -7,7 +7,7 @@ type Options = {
 
 const makeQueryString = ({ difficulty, category }: Options) =>
   `${difficulty && `&difficulty=${difficulty}`}${
-    category && `&category=${category.id}`
+    category && `&category=${category.value}`
   }`;
 
 export const fetchQuestions = async (options: Options) => {
