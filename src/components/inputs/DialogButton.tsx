@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 import {
   ScrollView,
   TouchableHighlight,
   StyleProp,
   ViewStyle,
-  TextStyle,
-} from "react-native";
-import { Modal, Portal, TextInput, RadioButton } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
+  TextStyle
+} from 'react-native';
+import { Modal, Portal, TextInput, RadioButton } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type SelectOption = {
   value: string;
@@ -29,7 +29,7 @@ export const DialogButton = <T extends SelectOption>({
   options,
   selectedValue,
   containerStyle,
-  inputStyle,
+  inputStyle
 }: DialogButtonProps<T>) => {
   const [isVisible, setVisibility] = React.useState(false);
 

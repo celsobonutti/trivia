@@ -1,15 +1,15 @@
-import React from "react";
-import { Button, Headline, Portal } from "react-native-paper";
-import { StyleSheet, View } from "react-native";
+import React from 'react';
+import { Button, Headline, Portal } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
 
-import { categories } from "../constants/categories";
-import { DefaultView } from "../components/containers/DefaultView";
-import { DialogButton } from "../components/inputs/DialogButton";
-import { difficulties } from "../constants/difficulties";
+import { categories } from '../constants/categories';
+import { DefaultView } from '../components/containers/DefaultView';
+import { DialogButton } from '../components/inputs/DialogButton';
+import { difficulties } from '../constants/difficulties';
 
 export const Home = () => {
-  const [selectedCategory, setCategory] = React.useState("0");
-  const [selectedDifficulty, setDifficulty] = React.useState("any");
+  const [selectedCategory, setCategory] = React.useState('0');
+  const [selectedDifficulty, setDifficulty] = React.useState('any');
 
   return (
     <DefaultView>
@@ -47,22 +47,22 @@ export const Home = () => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
+    justifyContent: 'center',
     flex: 1,
-    paddingHorizontal: 18,
+    paddingHorizontal: 18
   },
   headline: {
-    textDecorationLine: "underline",
-    textDecorationColor: "white",
-    fontStyle: "italic",
-    position: "absolute",
+    textDecorationLine: 'underline',
+    textDecorationColor: 'white',
+    fontStyle: 'italic',
+    position: 'absolute',
     top: 48,
-    left: 18,
+    left: 18
   },
   button: {
-    marginVertical: 36,
+    marginVertical: 36
   },
   buttonContentStyle: {
-    height: 50,
-  },
+    height: 50
+  }
 });

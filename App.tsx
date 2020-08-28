@@ -1,11 +1,11 @@
-import "react-native-gesture-handler";
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { ThemeProvider } from "react-native-paper";
+import 'react-native-gesture-handler';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { ThemeProvider } from 'react-native-paper';
 
-import { darkTheme } from "./src/utils/theme";
-import { Home } from "./src/screens/Home";
+import { darkTheme } from './src/utils/theme';
+import { Home } from './src/screens/Home';
 
 const Stack = createStackNavigator();
 

@@ -1,4 +1,4 @@
-import { Category, Difficulty, Question } from "../types/questions";
+import { Category, Difficulty, Question } from '../types/questions';
 
 type Options = {
   difficulty?: Difficulty;
