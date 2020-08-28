@@ -1,4 +1,4 @@
-import { Question } from '../src/types/questions';
+import { Question } from '../types/questions';
 
 type State = {
   questions: Map<number, Question>;
