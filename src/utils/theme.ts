@@ -10,6 +10,6 @@ export const darkTheme: Theme = {
     accent: '#e53170',
     surface: '#000000',
     backdrop: '#0c0c0c',
-    text: "#fffffe",
+    text: '#fffffe'
   }
 };

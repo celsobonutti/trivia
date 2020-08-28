@@ -1,18 +1,18 @@
 export const difficulties = [
   {
-    label: "Any",
-    value: "any"
+    label: 'Any',
+    value: 'any'
   },
   {
-    label: "Easy",
-    value: "easy"
+    label: 'Easy',
+    value: 'easy'
   },
   {
-    label: "Medium",
-    value: "medium"
+    label: 'Medium',
+    value: 'medium'
   },
   {
-    label: "Hard",
-    value: "hard"
+    label: 'Hard',
+    value: 'hard'
   }
 ];
