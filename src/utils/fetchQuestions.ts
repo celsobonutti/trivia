@@ -5,10 +5,16 @@ type Options = {
   category?: Category;
 };
 
-const makeQueryString = ({ difficulty, category }: Options) =>
-  `${difficulty && `&difficulty=${difficulty}`}${
-    category && `&category=${category.value}`
-  }`;
+export const makeQueryString = ({ difficulty, category }: Options) => {
+  let queryString = '';
+  if (difficulty && difficulty !== Difficulty.Any) {
+    queryString = queryString.concat(`&difficulty=${difficulty}`);
+  }
+  if (category && category?.value !== '0') {
+    queryString = queryString.concat(`&category=${category?.value}`);
+  }
+  return queryString;
+};
 
 export const fetchQuestions = async (options: Options) => {
   try {
