@@ -4,7 +4,8 @@ import {
   TouchableHighlight,
   StyleProp,
   ViewStyle,
-  TextStyle
+  TextStyle,
+  View
 } from 'react-native';
 import { Modal, Portal, TextInput, RadioButton } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -63,15 +64,16 @@ export const DialogButton = <T extends SelectOption>({
         </Modal>
       </Portal>
       <TouchableHighlight style={containerStyle} onPress={showModal}>
-        <TextInput
-          mode="outlined"
-          label={label}
-          value={
-            options.find((option) => option.value === selectedValue)?.label
-          }
-          editable={false}
-          style={inputStyle}
-        />
+        <View pointerEvents="none">
+          <TextInput
+            mode="outlined"
+            label={label}
+            value={
+              options.find((option) => option.value === selectedValue)?.label
+            }
+            style={[inputStyle]}
+          />
+        </View>
       </TouchableHighlight>
     </>
   );
