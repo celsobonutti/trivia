@@ -7,7 +7,7 @@ type Options = {
 
 export const makeQueryString = ({ difficulty, category }: Options) => {
   let queryString = '';
-  if (difficulty && difficulty !== Difficulty.Any) {
+  if (difficulty && difficulty !== 'any') {
     queryString = queryString.concat(`&difficulty=${difficulty}`);
   }
   if (category && category?.value !== '0') {
@@ -20,7 +20,7 @@ export const fetchQuestions = async (options: Options) => {
   try {
     let queryString = makeQueryString(options);
     let response = await fetch(
-      `https://opentdb.com/api.php?amount=10${queryString}`
+      `https://opentdb.com/api.php?amount=10&type=boolean${queryString}`
     );
     let data = await response.json();
     return data.results as Question[];

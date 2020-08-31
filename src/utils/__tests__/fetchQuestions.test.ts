@@ -1,10 +1,9 @@
 import { makeQueryString } from '../fetchQuestions';
-import { Difficulty } from '../../types/questions';
 
 describe('it generates query strings correctly', () => {
   test('when every option is passed', () => {
     const queryString = makeQueryString({
-      difficulty: Difficulty.Hard,
+      difficulty: 'hard',
       category: { value: '10', label: 'Entertainment: Books' }
     });
 
@@ -18,7 +17,7 @@ describe('it generates query strings correctly', () => {
   });
 
   test('when only difficulty is passed', () => {
-    const queryString = makeQueryString({ difficulty: Difficulty.Medium });
+    const queryString = makeQueryString({ difficulty: 'medium' });
 
     expect(queryString).toBe('&difficulty=medium');
   });
@@ -33,7 +32,7 @@ describe('it generates query strings correctly', () => {
 
   test("when 'any' options are passed", () => {
     const queryString = makeQueryString({
-      difficulty: Difficulty.Any,
+      difficulty: 'any',
       category: { value: '0', label: 'Any' }
     });
 

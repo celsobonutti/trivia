@@ -1,9 +1,4 @@
-export enum Difficulty {
-  Any = 'any',
-  Easy = 'easy',
-  Medium = 'medium',
-  Hard = 'hard'
-}
+export type Difficulty = 'any' | 'easy' | 'medium' | 'hard';
 
 export type Category = {
   label: string;
@@ -11,8 +6,9 @@ export type Category = {
 };
 
 export type Question = {
-  category: Category;
+  category: string;
   difficulty: Difficulty;
   answer: boolean;
-  selectedAnswer: boolean;
+  selectedAnswer?: boolean;
+  question: string;
 };
