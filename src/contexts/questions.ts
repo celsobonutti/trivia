@@ -29,11 +29,12 @@ export const reducer = (currentState: State, action: Action): State => {
       if (!question) {
         throw Error('Error trying to update unexisting question.');
       } else {
-        currentState.questions.set(action.index, {
-          ...question,
-          answer: action.answer
-        });
-        const questions = new Map(currentState.questions);
+        const questions = new Map(
+          currentState.questions.set(action.index, {
+            ...question,
+            selectedAnswer: action.answer
+          })
+        );
         return { ...currentState, questions };
       }
   }
