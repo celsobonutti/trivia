@@ -1,4 +1,4 @@
-import { makeQueryString } from '../fetchQuestions';
+import { makeQueryString, parseQuestion } from '../fetchQuestions';
 
 describe('it generates query strings correctly', () => {
   test('when every option is passed', () => {
@@ -37,5 +37,31 @@ describe('it generates query strings correctly', () => {
     });
 
     expect(queryString).toBe('');
+  });
+});
+
+describe('it parses questions correctly', () => {
+  test('when it has quotes', () => {
+    const question = 'Do you like &quot;memes&quot;?';
+
+    const parsedQuestion = parseQuestion(question);
+
+    expect(parsedQuestion).toBe('Do you like "memes"?');
+  });
+
+  test('when it has single-quotes', () => {
+    const question = 'Do you like &#039;memes&#039;?';
+
+    const parsedQuestion = parseQuestion(question);
+
+    expect(parsedQuestion).toBe("Do you like 'memes'?");
+  });
+
+  test('when it has both single and double quotes', () => {
+    const question = 'Do you like &quot;memes&#039;?';
+
+    const parsedQuestion = parseQuestion(question);
+
+    expect(parsedQuestion).toBe('Do you like "memes\'?');
   });
 });

@@ -5,6 +5,9 @@ type Options = {
   category?: Category;
 };
 
+export const parseQuestion = (text: string): string =>
+  text.replace(/&quot;/g, '"').replace(/&#039;/g, "'");
+
 export const makeQueryString = ({ difficulty, category }: Options) => {
   let queryString = '';
   if (difficulty && difficulty !== 'any') {
@@ -17,14 +20,14 @@ export const makeQueryString = ({ difficulty, category }: Options) => {
 };
 
 export const fetchQuestions = async (options: Options) => {
-  try {
-    let queryString = makeQueryString(options);
-    let response = await fetch(
-      `https://opentdb.com/api.php?amount=10&type=boolean${queryString}`
-    );
-    let data = await response.json();
-    return data.results as Question[];
-  } catch (e) {
-    // TO-DO
-  }
+  const queryString = makeQueryString(options);
+  const response = await fetch(
+    `https://opentdb.com/api.php?amount=10&type=boolean${queryString}`
+  );
+  const data = await response.json();
+  const questions = data.results as Question[];
+  return questions.map((question) => ({
+    ...question,
+    question: parseQuestion(question.question)
+  }));
 };
