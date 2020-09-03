@@ -1,7 +1,7 @@
 import React from 'react';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
-import { Button, useTheme } from 'react-native-paper';
+import { Button, Text, useTheme } from 'react-native-paper';
 import { Map } from 'immutable';
 
 import { GameStackParamList } from '../../App';
@@ -47,10 +47,8 @@ export const Game = () => {
       if (currentIndex < 9) {
         Animated.parallel([fadeOut(), moveRight()]).start(() => {
           labelPositionOffset.setValue(-width / 2);
-          setTimeout(() => {
-            setCurrentIndex((current) => (current < 9 ? current + 1 : current));
-            Animated.parallel([fadeIn(), moveCenter()]).start();
-          }, 100);
+          setCurrentIndex((current) => (current < 9 ? current + 1 : current));
+          Animated.parallel([fadeIn(), moveCenter()]).start();
         });
       }
     } else {
@@ -83,6 +81,7 @@ export const Game = () => {
 
   return (
     <DefaultView style={styles.container}>
+      <Text style={styles.counter}>{currentIndex + 1}/10</Text>
       <Animated.View
         style={[
           styles.labelContainer,
@@ -133,6 +132,11 @@ export const Game = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 18
+  },
+  counter: {
+    alignSelf: 'center',
+    fontSize: 11,
+    marginTop: 16
   },
   labelContainer: {
     flex: 1
