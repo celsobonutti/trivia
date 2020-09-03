@@ -6,17 +6,18 @@ import { ThemeProvider } from 'react-native-paper';
 
 import { darkTheme } from './src/utils/theme';
 import { Home } from './src/screens/Home';
+import { ErrorBoundary } from './src/components/containers/ErrorBoundary';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <ThemeProvider theme={darkTheme}>
-      <NavigationContainer>
-        <Stack.Navigator headerMode="none">
-          <Stack.Screen name="Home" component={Home} />
+      <ErrorBoundary>
+        <NavigationContainer>
         </Stack.Navigator>
       </NavigationContainer>
+      </ErrorBoundary>
     </ThemeProvider>
   );
 }
