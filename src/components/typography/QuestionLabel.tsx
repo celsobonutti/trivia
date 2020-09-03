@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   text: {
     flex: 1,
     fontSize: 22,
-    textAlign: 'justify',
+    textAlign: 'center',
     marginTop: 36
   }
 });
