@@ -64,7 +64,8 @@
     ],
     "automock": false,
     "setupFilesAfterEnv": [
-      "<rootDir>/setupTests.ts"
+      "<rootDir>/setupTests.ts",
+      "@testing-library/jest-native/extend-expect"
     ]
   }
 }

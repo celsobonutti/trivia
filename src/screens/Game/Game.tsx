@@ -1,77 +1,22 @@
 import React from 'react';
-import { Animated, Dimensions, StyleSheet, View } from 'react-native';
-import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
+import { Animated, StyleSheet, View } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
-import { Map } from 'immutable';
 
-import { GameStackParamList } from '../../../App';
 import { DefaultView } from '../../components/containers/DefaultView';
 import { QuestionLabel } from '../../components/typography/QuestionLabel';
-
-type GameScreenRouteProp = RouteProp<GameStackParamList, 'Game'>;
-type GameScreenNavigationProp = NavigationProp<GameStackParamList, 'Game'>;
+import { useGameState } from './useGameState';
 
 export const Game = () => {
-  const { width } = Dimensions.get('screen');
-  const { params: questions } = useRoute<GameScreenRouteProp>();
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-  const [answers, setAnswers] = React.useState<Map<number, boolean>>(Map());
-  const labelOpacity = React.useRef(new Animated.Value(1)).current;
-  const labelPositionOffset = React.useRef(new Animated.Value(0)).current;
+  const {
+    answerQuestion,
+    answers,
+    currentQuestion,
+    currentQuestionIndex,
+    goBack,
+    labelOpacity,
+    labelPositionOffset
+  } = useGameState();
   const { colors } = useTheme();
-
-  const setOpacity = (opacity: number) =>
-    Animated.timing(labelOpacity, {
-      toValue: opacity,
-      duration: 150,
-      useNativeDriver: true
-    });
-
-  const moveTo = (position: number) =>
-    Animated.spring(labelPositionOffset, {
-      toValue: position,
-      tension: 80,
-      useNativeDriver: true
-    });
-
-  const fadeIn = () => setOpacity(1);
-  const fadeOut = () => setOpacity(0);
-  const moveLeft = () => moveTo(-width / 2);
-  const moveRight = () => moveTo(width / 2);
-  const moveCenter = () => moveTo(0);
-
-  const answerQuestion = (value: boolean) => {
-    let question = questions[currentIndex];
-    if (question) {
-      setAnswers((current) => current.set(currentIndex, value));
-      if (currentIndex < 9) {
-        Animated.parallel([fadeOut(), moveRight()]).start(() => {
-          labelPositionOffset.setValue(-width / 2);
-          setCurrentIndex((current) => (current < 9 ? current + 1 : current));
-          Animated.parallel([fadeIn(), moveCenter()]).start();
-        });
-      }
-    } else {
-      throw new Error(
-        'Something went wrong: You tried to answer a question that does not exist. Please report this situation to our support team.'
-      );
-    }
-  };
-
-  const goBack = () => {
-    if (currentIndex > 0) {
-      Animated.parallel([fadeOut(), moveLeft()]).start(() => {
-        labelPositionOffset.setValue(width / 2);
-        setCurrentIndex((current) => (current > 0 ? current - 1 : current));
-        Animated.parallel([fadeIn(), moveCenter()]).start();
-      });
-    }
-  };
-
-  const currentQuestion = React.useMemo(() => questions[currentIndex], [
-    questions,
-    currentIndex
-  ]);
 
   if (!currentQuestion) {
     throw new Error(
@@ -82,7 +27,7 @@ export const Game = () => {
   return (
     <DefaultView style={styles.container}>
       <Text style={styles.counter} testID="current">
-        {currentIndex + 1}/10
+        {currentQuestionIndex + 1}/10
       </Text>
       <Animated.View
         style={[
@@ -104,7 +49,11 @@ export const Game = () => {
           <Button
             style={styles.button}
             color={colors.accent}
-            mode={answers.get(currentIndex) === true ? 'contained' : 'outlined'}
+            mode={
+              answers.get(currentQuestionIndex) === true
+                ? 'contained'
+                : 'outlined'
+            }
             onPress={() => answerQuestion(true)}
           >
             True
@@ -112,7 +61,9 @@ export const Game = () => {
           <Button
             style={styles.button}
             mode={
-              answers.get(currentIndex) === false ? 'contained' : 'outlined'
+              answers.get(currentQuestionIndex) === false
+                ? 'contained'
+                : 'outlined'
             }
             onPress={() => answerQuestion(false)}
           >
@@ -121,7 +72,7 @@ export const Game = () => {
         </Animated.View>
         <Button
           style={styles.button}
-          disabled={currentIndex === 0}
+          disabled={currentQuestionIndex === 0}
           onPress={goBack}
         >
           Go back
