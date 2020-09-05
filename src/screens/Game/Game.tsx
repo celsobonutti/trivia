@@ -42,7 +42,7 @@ export const Game = () => {
           }
         ]}
       >
-        <QuestionLabel>{currentQuestion.label}</QuestionLabel>
+        <QuestionLabel question={currentQuestion} />
       </Animated.View>
       <View style={styles.buttonContainer}>
         <Animated.View style={{ opacity: labelOpacity }}>
@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
     marginTop: 16
   },
   labelContainer: {
-    flex: 1
+    flex: 1,
+    justifyContent: 'center'
   },
   buttonContainer: {
     flex: 1
