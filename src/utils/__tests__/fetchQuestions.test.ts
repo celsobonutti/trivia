@@ -1,4 +1,10 @@
-import { makeQueryString, parseQuestion } from '../fetchQuestions';
+import questions from '../../test_helpers/response_sample.json';
+
+import {
+  makeQueryString,
+  parseQuestion,
+  parseQuestionText
+} from '../fetchQuestions';
 
 describe('it generates query strings correctly', () => {
   test('when every option is passed', () => {
@@ -41,27 +47,29 @@ describe('it generates query strings correctly', () => {
 });
 
 describe('it parses questions correctly', () => {
-  test('when it has quotes', () => {
+  test('when its text has double quotes', () => {
     const question = 'Do you like &quot;memes&quot;?';
 
-    const parsedQuestion = parseQuestion(question);
+    const parsedQuestion = parseQuestionText(question);
 
     expect(parsedQuestion).toBe('Do you like "memes"?');
   });
 
-  test('when it has single-quotes', () => {
+  test('when its text has single-quotes', () => {
     const question = 'Do you like &#039;memes&#039;?';
 
-    const parsedQuestion = parseQuestion(question);
+    const parsedQuestion = parseQuestionText(question);
 
     expect(parsedQuestion).toBe("Do you like 'memes'?");
   });
 
-  test('when it has both single and double quotes', () => {
+  test('when its text has both single and double quotes', () => {
     const question = 'Do you like &quot;memes&#039;?';
 
-    const parsedQuestion = parseQuestion(question);
+    const parsedQuestion = parseQuestionText(question);
 
     expect(parsedQuestion).toBe('Do you like "memes\'?');
   });
+
+  test('when parsing a full body', () => {});
 });

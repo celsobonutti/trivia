@@ -4,9 +4,9 @@ import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 import { Button, Text, useTheme } from 'react-native-paper';
 import { Map } from 'immutable';
 
-import { GameStackParamList } from '../../App';
-import { DefaultView } from '../components/containers/DefaultView';
-import { QuestionLabel } from '../components/typography/QuestionLabel';
+import { GameStackParamList } from '../../../App';
+import { DefaultView } from '../../components/containers/DefaultView';
+import { QuestionLabel } from '../../components/typography/QuestionLabel';
 
 type GameScreenRouteProp = RouteProp<GameStackParamList, 'Game'>;
 type GameScreenNavigationProp = NavigationProp<GameStackParamList, 'Game'>;
@@ -81,7 +81,9 @@ export const Game = () => {
 
   return (
     <DefaultView style={styles.container}>
-      <Text style={styles.counter}>{currentIndex + 1}/10</Text>
+      <Text style={styles.counter} testID="current">
+        {currentIndex + 1}/10
+      </Text>
       <Animated.View
         style={[
           styles.labelContainer,
@@ -95,7 +97,7 @@ export const Game = () => {
           }
         ]}
       >
-        <QuestionLabel>{currentQuestion.question}</QuestionLabel>
+        <QuestionLabel>{currentQuestion.label}</QuestionLabel>
       </Animated.View>
       <View style={styles.buttonContainer}>
         <Animated.View style={{ opacity: labelOpacity }}>

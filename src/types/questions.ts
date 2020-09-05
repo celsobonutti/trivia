@@ -9,5 +9,5 @@ export type Question = {
   category: string;
   difficulty: Difficulty;
   answer: boolean;
-  question: string;
+  label: string;
 };

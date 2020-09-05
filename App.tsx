@@ -6,7 +6,7 @@ import { ThemeProvider } from 'react-native-paper';
 
 import { darkTheme } from './src/utils/theme';
 import { Home } from './src/screens/Home';
-import { Game } from './src/screens/Game';
+import { Game } from './src/screens/Game/Game';
 import { Question } from './src/types/questions';
 import { ErrorBoundary } from './src/components/containers/ErrorBoundary';
 

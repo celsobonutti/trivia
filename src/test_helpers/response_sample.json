@@ -1,0 +1,37 @@
+{
+  "response_code": 0,
+  "results": [
+    {
+      "category": "Entertainment: Video Games",
+      "type": "boolean",
+      "difficulty": "easy",
+      "question": "Pac-Man was invented by the designer Toru Iwatani while he was eating pizza.",
+      "correct_answer": "True",
+      "incorrect_answers": ["False"]
+    },
+    {
+      "category": "Entertainment: Video Games",
+      "type": "boolean",
+      "difficulty": "easy",
+      "question": "In the &quot;Half-Life&quot; series, &quot;H.E.V&quot; stands for &quot;Hazardous Evasiveness Vest&quot;",
+      "correct_answer": "False",
+      "incorrect_answers": ["True"]
+    },
+    {
+      "category": "Politics",
+      "type": "boolean",
+      "difficulty": "medium",
+      "question": "During the 2016 United States presidential election, the State of California possessed the most electoral votes, having 55.",
+      "correct_answer": "True",
+      "incorrect_answers": ["False"]
+    },
+    {
+      "category": "Science: Mathematics",
+      "type": "boolean",
+      "difficulty": "medium",
+      "question": "E = MC3",
+      "correct_answer": "False",
+      "incorrect_answers": ["True"]
+    }
+  ]
+}

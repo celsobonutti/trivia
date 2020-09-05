@@ -5,8 +5,18 @@ type Options = {
   category?: Category;
 };
 
-export const parseQuestion = (text: string): string =>
+export const parseQuestionText = (text: string): string =>
   text.replace(/&quot;/g, '"').replace(/&#039;/g, "'");
+
+export const parseQuestion = (jsonQuestion: any): Question => ({
+  category: jsonQuestion.category,
+  answer: jsonQuestion.correct_answer === 'True',
+  difficulty: jsonQuestion.difficulty,
+  label: parseQuestionText(jsonQuestion.question)
+});
+
+export const parseQuestions = (jsonQuestions: any[]): Question[] =>
+  jsonQuestions.map(parseQuestion);
 
 export const makeQueryString = ({ difficulty, category }: Options) => {
   let queryString = '';
@@ -25,9 +35,6 @@ export const fetchQuestions = async (options: Options) => {
     `https://opentdb.com/api.php?amount=10&type=boolean${queryString}`
   );
   const data = await response.json();
-  const questions = data.results as Question[];
-  return questions.map((question) => ({
-    ...question,
-    question: parseQuestion(question.question)
-  }));
+  const questions = data.results;
+  return parseQuestions(questions);
 };
