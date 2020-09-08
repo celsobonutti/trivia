@@ -14,8 +14,9 @@ export const Result = ({ answer }: ResultProps) => {
   const styles = makeStyles(isRight);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="result">
       <MaterialCommunityIcons
+        accessibilityLabel={isRight ? 'Right answer' : 'Wrong answer'}
         name={isRight ? 'check' : 'close'}
         color={isRight ? 'green' : 'red'}
         size={20}
