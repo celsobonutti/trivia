@@ -1,26 +1,24 @@
 import React from 'react';
 import { Button, Headline, Portal } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
-import { categories } from '../constants/categories';
-import { DefaultView } from '../components/containers/DefaultView';
-import { DialogButton } from '../components/inputs/DialogButton';
-import { difficulties } from '../constants/difficulties';
-import { fetchQuestions } from '../utils/fetchQuestions';
-import { Category, Difficulty } from '../types/questions';
-import { GameStackParamList } from '../../App';
+import { categories } from '../../constants/categories';
+import { DefaultView } from '../../components/containers/DefaultView';
+import { DialogButton } from '../../components/inputs/DialogButton';
+import { difficulties } from '../../constants/difficulties';
+import { fetchQuestions } from '../../utils/fetchQuestions';
+import { Category, Difficulty, Question } from '../../types/questions';
 
-type HomeScreenNavigationProp = StackNavigationProp<GameStackParamList, 'Home'>;
+type HomeProps = {
+  goToGame: (arg: Question[]) => void;
+};
 
-export const Home = () => {
+export const Home = ({ goToGame }: HomeProps) => {
   const [selectedCategory, setCategory] = React.useState('0');
   const [selectedDifficulty, setDifficulty] = React.useState<Difficulty>('any');
   const [loading, setLoading] = React.useState(false);
-  const navigation = useNavigation<HomeScreenNavigationProp>();
 
-  const goToGame = () => {
+  const onPlayPressed = () => {
     setLoading(true);
     const category = categories.find(
       (cat) => cat.value === selectedCategory
@@ -30,7 +28,7 @@ export const Home = () => {
       difficulty: selectedDifficulty
     })
       .then((questions) => {
-        navigation.navigate('Game', questions);
+        goToGame(questions);
       })
       .catch(console.warn)
       .finally(() => {
@@ -63,7 +61,7 @@ export const Home = () => {
             dark
             style={styles.button}
             contentStyle={styles.buttonContentStyle}
-            onPress={goToGame}
+            onPress={onPlayPressed}
             loading={loading}
           >
             Play the game

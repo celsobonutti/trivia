@@ -4,9 +4,14 @@ import { Button, Text, useTheme } from 'react-native-paper';
 
 import { DefaultView } from '../../components/containers/DefaultView';
 import { QuestionLabel } from '../../components/typography/QuestionLabel';
+import { Question } from '../../types/questions';
 import { useGameState } from './useGameState';
 
-export const Game = () => {
+type GameProps = {
+  questions: Question[];
+};
+
+export const Game = ({ questions }: GameProps) => {
   const {
     answerQuestion,
     answers,
@@ -15,7 +20,7 @@ export const Game = () => {
     goBack,
     labelOpacity,
     labelPositionOffset
-  } = useGameState();
+  } = useGameState(questions);
   const { colors } = useTheme();
 
   if (!currentQuestion) {
@@ -26,10 +31,12 @@ export const Game = () => {
 
   return (
     <DefaultView style={styles.container}>
-      <Text style={styles.counter} testID="current">
-        {currentQuestionIndex + 1}/10
+      <Text style={styles.counter} accessibilityLabel="Current question">
+        {currentQuestionIndex + 1}/{questions.length}
       </Text>
       <Animated.View
+        accessible
+        accessibilityLabel="Question"
         style={[
           styles.labelContainer,
           {
@@ -45,7 +52,10 @@ export const Game = () => {
         <QuestionLabel question={currentQuestion} />
       </Animated.View>
       <View style={styles.buttonContainer}>
-        <Animated.View style={{ opacity: labelOpacity }}>
+        <Animated.View
+          style={{ opacity: labelOpacity }}
+          accessibilityLabel="Possible answers"
+        >
           <Button
             style={styles.button}
             color={colors.accent}
@@ -55,6 +65,7 @@ export const Game = () => {
                 : 'outlined'
             }
             onPress={() => answerQuestion(true)}
+            testID="true"
           >
             True
           </Button>
@@ -66,6 +77,7 @@ export const Game = () => {
                 : 'outlined'
             }
             onPress={() => answerQuestion(false)}
+            testID="false"
           >
             False
           </Button>

@@ -1,17 +1,12 @@
 import React, { Reducer } from 'react';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import { Animated, Dimensions } from 'react-native';
 import { Map } from 'immutable';
 
-import { GameStackParamList } from '../../../App';
 import { GameAction, GameState, reducer } from './reducer';
 import { Question } from '../../types/questions';
 
-type GameScreenRouteProp = RouteProp<GameStackParamList, 'Game'>;
-
-export const useGameState = () => {
+export const useGameState = (gameQuestions: Question[]) => {
   const { width } = Dimensions.get('screen');
-  const { params } = useRoute<GameScreenRouteProp>();
   const labelOpacity = React.useRef(new Animated.Value(1)).current;
   const labelPositionOffset = React.useRef(new Animated.Value(0)).current;
 
@@ -21,7 +16,7 @@ export const useGameState = () => {
   ] = React.useReducer<Reducer<GameState, GameAction>>(reducer, {
     answers: Map(),
     currentQuestionIndex: 0,
-    questions: params as Question[]
+    questions: gameQuestions
   });
 
   const setOpacity = (opacity: number) =>
