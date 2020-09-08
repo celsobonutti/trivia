@@ -18,7 +18,7 @@ export const Result = ({ answer }: ResultProps) => {
       <MaterialCommunityIcons
         accessibilityLabel={isRight ? 'Right answer' : 'Wrong answer'}
         name={isRight ? 'check' : 'close'}
-        color={isRight ? 'green' : 'red'}
+        color={isRight ? '#007E33' : '#ff4444'}
         size={20}
       />
       <Text style={styles.text} numberOfLines={2}>
@@ -31,7 +31,7 @@ export const Result = ({ answer }: ResultProps) => {
 const makeStyles = (isRight: boolean) =>
   StyleSheet.create({
     container: {
-      borderColor: isRight ? 'green' : 'red',
+      borderColor: isRight ? '#007E33' : '#ff4444',
       borderWidth: 1,
       borderRadius: 4,
       marginVertical: 4,
