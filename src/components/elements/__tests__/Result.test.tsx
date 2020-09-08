@@ -20,7 +20,7 @@ describe('<Result />', () => {
 
     expect(container).toContainElement(question);
     expect(container).toHaveStyle({
-      borderColor: 'green'
+      borderColor: '#007E33'
     });
   });
 
@@ -40,7 +40,7 @@ describe('<Result />', () => {
 
     expect(container).toContainElement(question);
     expect(container).toHaveStyle({
-      borderColor: 'red'
+      borderColor: '#ff4444'
     });
   });
 });
