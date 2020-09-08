@@ -22,6 +22,9 @@ type DialogButtonProps<T extends SelectOption> = {
   label: string;
   containerStyle?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<TextStyle>;
+  testID: string;
+  accessibilityLabel: string;
+  inputA11yLabel: string;
 };
 
 export const DialogButton = <T extends SelectOption>({
@@ -30,7 +33,10 @@ export const DialogButton = <T extends SelectOption>({
   options,
   selectedValue,
   containerStyle,
-  inputStyle
+  inputStyle,
+  testID,
+  accessibilityLabel,
+  inputA11yLabel
 }: DialogButtonProps<T>) => {
   const [isVisible, setVisibility] = React.useState(false);
 
@@ -63,7 +69,12 @@ export const DialogButton = <T extends SelectOption>({
           </SafeAreaView>
         </Modal>
       </Portal>
-      <TouchableHighlight style={containerStyle} onPress={showModal}>
+      <TouchableHighlight
+        style={containerStyle}
+        onPress={showModal}
+        testID={testID}
+        accessibilityLabel={accessibilityLabel}
+      >
         <View pointerEvents="none">
           <TextInput
             mode="outlined"
@@ -72,6 +83,8 @@ export const DialogButton = <T extends SelectOption>({
               options.find((option) => option.value === selectedValue)?.label
             }
             style={[inputStyle]}
+            accessibilityLabel={inputA11yLabel}
+            accessibilityRole="button"
           />
         </View>
       </TouchableHighlight>

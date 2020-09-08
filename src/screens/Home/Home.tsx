@@ -45,6 +45,9 @@ export const Home = ({ goToGame }: HomeProps) => {
           </Headline>
           <DialogButton
             label="Do you want to select a category?"
+            accessibilityLabel="Press to select a category"
+            inputA11yLabel="Selected category"
+            testID="category"
             options={categories}
             onChange={setCategory}
             selectedValue={selectedCategory}
@@ -52,12 +55,16 @@ export const Home = ({ goToGame }: HomeProps) => {
           />
           <DialogButton
             label="What about difficulty?"
+            accessibilityLabel="Press to select a difficulty"
+            inputA11yLabel="Selected difficulty"
+            testID="difficulty"
             options={difficulties}
             onChange={(value) => setDifficulty(value as Difficulty)}
             selectedValue={selectedDifficulty}
           />
           <Button
             mode="contained"
+            testID="play"
             dark
             style={styles.button}
             contentStyle={styles.buttonContentStyle}
