@@ -10,8 +10,12 @@ type QuestionLabelProps = {
 
 export const QuestionLabel = ({ question }: QuestionLabelProps) => (
   <>
-    <Text style={styles.label}>{question.label}</Text>
-    <Text style={styles.category}>{question.category}</Text>
+    <Text style={styles.label} accessibilityLabel="Text">
+      {question.label}
+    </Text>
+    <Text style={styles.category} accessibilityLabel="Category">
+      {question.category}
+    </Text>
   </>
 );
 
