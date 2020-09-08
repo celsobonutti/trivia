@@ -10,8 +10,10 @@ import { parseQuestions } from '../../../utils/fetchQuestions';
 const questions = parseQuestions(responseSample.results);
 
 const renderGame = () => {
+  const onSubmit = jest.fn();
+
   const { getByA11yLabel, getByText, getByTestId } = render(
-    <Game questions={questions} />
+    <Game questions={questions} onSubmitAnswers={onSubmit} />
   );
 
   const goBackButton = getByText('Go back');
@@ -19,6 +21,7 @@ const renderGame = () => {
   const questionContainer = getByA11yLabel('Question');
   const trueButton = getByTestId('true');
   const falseButton = getByTestId('false');
+  const submitButton = getByTestId('submit');
 
   return {
     getByA11yLabel,
@@ -28,7 +31,9 @@ const renderGame = () => {
     questionCounter,
     questionContainer,
     trueButton,
-    falseButton
+    falseButton,
+    onSubmit,
+    submitButton
   };
 };
 
@@ -38,7 +43,8 @@ describe('<Game />', () => {
       getByText,
       questionContainer,
       goBackButton,
-      questionCounter
+      questionCounter,
+      submitButton
     } = renderGame();
 
     await act(async () => {
@@ -49,6 +55,7 @@ describe('<Game />', () => {
       expect(questionContainer).toContainElement(category);
       expect(goBackButton).toBeDisabled();
       expect(questionCounter).toHaveTextContent('1/4');
+      expect(submitButton).toBeDisabled();
     });
   });
 
@@ -93,6 +100,48 @@ describe('<Game />', () => {
         expect(questionContainer).toContainElement(label);
         expect(questionCounter).toHaveTextContent('1/4');
       });
+    });
+  });
+
+  it('submits answers correctly', async () => {
+    const { trueButton, falseButton, submitButton, onSubmit } = renderGame();
+
+    await act(async () => {
+      fireEvent.press(trueButton);
+
+      await waitForExpect(() => {
+        expect(falseButton).toBeEnabled();
+      });
+
+      fireEvent.press(falseButton);
+
+      await waitForExpect(() => {
+        expect(trueButton).toBeEnabled();
+      });
+
+      fireEvent.press(trueButton);
+
+      await waitForExpect(() => {
+        expect(falseButton).toBeEnabled();
+      });
+
+      fireEvent.press(falseButton);
+
+      await waitForExpect(() => {
+        expect(submitButton).toBeEnabled();
+      });
+
+      fireEvent.press(submitButton);
+
+      const answers = questions.map((question, index) => {
+        return {
+          question: question.label,
+          correctAnswer: question.answer,
+          selectedAnswer: index % 2 === 0
+        };
+      });
+
+      expect(onSubmit).toBeCalledWith(answers);
     });
   });
 });

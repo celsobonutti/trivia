@@ -10,10 +10,13 @@ import { HomeNavigator } from './src/navigators/HomeNavigator';
 import { GameNavigator } from './src/navigators/GameNavigator';
 import { Question } from './src/types/questions';
 import { ErrorBoundary } from './src/components/containers/ErrorBoundary';
+import { Answer } from './src/types/result';
+import { ResultNavigator } from './src/navigators/ResultNavigator';
 
 export type GameStackParamList = {
   Home: undefined;
   Game: Question[];
+  Result: Answer[];
 };
 
 const Stack = createStackNavigator<GameStackParamList>();
@@ -27,6 +30,7 @@ export default function App() {
           <Stack.Navigator headerMode="none">
             <Stack.Screen name="Home" component={HomeNavigator} />
             <Stack.Screen name="Game" component={GameNavigator} />
+            <Stack.Screen name="Result" component={ResultNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
       </ErrorBoundary>

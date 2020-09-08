@@ -28,12 +28,10 @@ export const Home = ({ goToGame }: HomeProps) => {
       difficulty: selectedDifficulty
     })
       .then((questions) => {
+        setLoading(false);
         goToGame(questions);
       })
-      .catch(console.warn)
-      .finally(() => {
-        setLoading(false);
-      });
+      .catch(console.warn);
   };
 
   return (

@@ -7,8 +7,12 @@ import { Question } from '../../types/questions';
 
 export const useGameState = (gameQuestions: Question[]) => {
   const { width } = Dimensions.get('screen');
+  const [areQuestionButtonDisabled, setQuestionButtonDisabled] = React.useState(
+    false
+  );
   const labelOpacity = React.useRef(new Animated.Value(1)).current;
   const labelPositionOffset = React.useRef(new Animated.Value(0)).current;
+  const submitButtonOpacity = React.useRef(new Animated.Value(0)).current;
 
   const [
     { questions, currentQuestionIndex, answers },
@@ -42,9 +46,11 @@ export const useGameState = (gameQuestions: Question[]) => {
   const answerQuestion = (value: boolean) => {
     dispatch({ type: 'answer_question', value });
     if (currentQuestionIndex < questions.length - 1) {
+      setQuestionButtonDisabled(true);
       Animated.parallel([fadeOut(), moveLeft()]).start(() => {
         labelPositionOffset.setValue(width / 2);
         dispatch({ type: 'progress' });
+        setQuestionButtonDisabled(false);
         Animated.parallel([fadeIn(), moveCenter()]).start();
       });
     }
@@ -60,6 +66,16 @@ export const useGameState = (gameQuestions: Question[]) => {
     }
   };
 
+  React.useLayoutEffect(() => {
+    if (answers.size === questions.length) {
+      Animated.timing(submitButtonOpacity, {
+        duration: 150,
+        toValue: 1,
+        useNativeDriver: true
+      }).start();
+    }
+  }, [answers, questions, submitButtonOpacity]);
+
   const currentQuestion = React.useMemo(() => questions[currentQuestionIndex], [
     questions,
     currentQuestionIndex
@@ -72,6 +88,8 @@ export const useGameState = (gameQuestions: Question[]) => {
     currentQuestionIndex,
     goBack,
     labelOpacity,
-    labelPositionOffset
+    labelPositionOffset,
+    submitButtonOpacity,
+    areQuestionButtonDisabled
   };
 };

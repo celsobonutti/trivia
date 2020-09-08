@@ -3,15 +3,17 @@ import { Animated, StyleSheet, View } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
 
 import { DefaultView } from '../../components/containers/DefaultView';
-import { QuestionLabel } from '../../components/typography/QuestionLabel';
+import { QuestionLabel } from '../../components/elements/QuestionLabel';
 import { Question } from '../../types/questions';
+import { Answer } from '../../types/result';
 import { useGameState } from './useGameState';
 
 type GameProps = {
   questions: Question[];
+  onSubmitAnswers: (arg: Answer[]) => void;
 };
 
-export const Game = ({ questions }: GameProps) => {
+export const Game = ({ questions, onSubmitAnswers }: GameProps) => {
   const {
     answerQuestion,
     answers,
@@ -19,7 +21,9 @@ export const Game = ({ questions }: GameProps) => {
     currentQuestionIndex,
     goBack,
     labelOpacity,
-    labelPositionOffset
+    labelPositionOffset,
+    submitButtonOpacity,
+    areQuestionButtonDisabled
   } = useGameState(questions);
   const { colors } = useTheme();
 
@@ -65,6 +69,7 @@ export const Game = ({ questions }: GameProps) => {
                 : 'outlined'
             }
             onPress={() => answerQuestion(true)}
+            disabled={areQuestionButtonDisabled}
             testID="true"
           >
             True
@@ -77,6 +82,7 @@ export const Game = ({ questions }: GameProps) => {
                 : 'outlined'
             }
             onPress={() => answerQuestion(false)}
+            disabled={areQuestionButtonDisabled}
             testID="false"
           >
             False
@@ -89,6 +95,26 @@ export const Game = ({ questions }: GameProps) => {
         >
           Go back
         </Button>
+        <Animated.View style={{ opacity: submitButtonOpacity }}>
+          <Button
+            icon="send"
+            color="green"
+            mode="contained"
+            testID="submit"
+            disabled={questions.length > answers.size}
+            onPress={() =>
+              onSubmitAnswers(
+                questions.map((question, index) => ({
+                  question: question.label,
+                  correctAnswer: question.answer,
+                  selectedAnswer: answers.get(index) as boolean
+                }))
+              )
+            }
+          >
+            Submit answers
+          </Button>
+        </Animated.View>
       </View>
     </DefaultView>
   );
