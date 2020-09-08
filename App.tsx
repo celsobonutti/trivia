@@ -12,6 +12,7 @@ import { Question } from './src/types/questions';
 import { ErrorBoundary } from './src/components/containers/ErrorBoundary';
 import { Answer } from './src/types/result';
 import { ResultNavigator } from './src/navigators/ResultNavigator';
+import { TriviaProvider } from './src/providers/TriviaProvider';
 
 export type GameStackParamList = {
   Home: undefined;
@@ -26,13 +27,15 @@ export default function App() {
     <ThemeProvider theme={darkTheme}>
       <StatusBar barStyle="dark-content" />
       <ErrorBoundary>
-        <NavigationContainer>
-          <Stack.Navigator headerMode="none">
-            <Stack.Screen name="Home" component={HomeNavigator} />
-            <Stack.Screen name="Game" component={GameNavigator} />
-            <Stack.Screen name="Result" component={ResultNavigator} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <TriviaProvider>
+          <NavigationContainer>
+            <Stack.Navigator headerMode="none">
+              <Stack.Screen name="Home" component={HomeNavigator} />
+              <Stack.Screen name="Game" component={GameNavigator} />
+              <Stack.Screen name="Result" component={ResultNavigator} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </TriviaProvider>
       </ErrorBoundary>
     </ThemeProvider>
   );

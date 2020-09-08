@@ -8,12 +8,14 @@ import { DialogButton } from '../../components/inputs/DialogButton';
 import { difficulties } from '../../constants/difficulties';
 import { fetchQuestions } from '../../utils/fetchQuestions';
 import { Category, Difficulty, Question } from '../../types/questions';
+import { TriviaState } from '../../providers/TriviaProvider';
 
 type HomeProps = {
   goToGame: (arg: Question[]) => void;
+  onSelectGameOptions: (arg: TriviaState) => void;
 };
 
-export const Home = ({ goToGame }: HomeProps) => {
+export const Home = ({ goToGame, onSelectGameOptions }: HomeProps) => {
   const [selectedCategory, setCategory] = React.useState('0');
   const [selectedDifficulty, setDifficulty] = React.useState<Difficulty>('any');
   const [loading, setLoading] = React.useState(false);
@@ -26,12 +28,14 @@ export const Home = ({ goToGame }: HomeProps) => {
     fetchQuestions({
       category,
       difficulty: selectedDifficulty
-    })
-      .then((questions) => {
-        setLoading(false);
-        goToGame(questions);
-      })
-      .catch(console.warn);
+    }).then((questions) => {
+      setLoading(false);
+      onSelectGameOptions({
+        category: category,
+        difficulty: selectedDifficulty
+      });
+      goToGame(questions);
+    });
   };
 
   return (

@@ -8,23 +8,25 @@ import { Home } from '../Home';
 import waitForExpect from 'wait-for-expect';
 
 const renderHome = () => {
-  const mockFunction = jest.fn();
+  const selectGameOptions = jest.fn();
+  const goToGame = jest.fn();
 
   const { getByTestId, getByA11yLabel, getByText } = render(
-    <Home goToGame={mockFunction} />
+    <Home goToGame={goToGame} onSelectGameOptions={selectGameOptions} />
   );
 
   return {
-    mockFunction,
+    goToGame,
     getByTestId,
     getByA11yLabel,
-    getByText
+    getByText,
+    selectGameOptions
   };
 };
 
 describe('<Home />', () => {
   it('renders correctly', async () => {
-    const { getByTestId, mockFunction } = renderHome();
+    const { getByTestId, goToGame, selectGameOptions } = renderHome();
 
     await act(async () => {
       fetchMock.mockResponseOnce(JSON.stringify(responseSample));
@@ -33,7 +35,8 @@ describe('<Home />', () => {
       fireEvent.press(playButton);
 
       waitForExpect(() => {
-        expect(mockFunction).toBeCalled();
+        expect(selectGameOptions).toHaveBeenCalled();
+        expect(goToGame).toHaveBeenCalled();
       });
     });
   });
